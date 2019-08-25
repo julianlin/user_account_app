@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import ErrorMessage from './ErrorMessage';
 
 
-export default class LoginPage extends Component {
+export default class UserCreationForm extends Component {
   constructor(props){
     super(props);
     this.state = {
