@@ -34,6 +34,10 @@ def index():
 def login():
   return render_template('index.html')
 
+@app.route('/manage_users')
+def manage_users():
+  return render_template('index.html')  
+
 @app.route('/login', methods=['POST'])
 def login_post():
   data = request.get_json()
@@ -51,6 +55,7 @@ def logout():
   return redirect("/")
 
 @app.route('/get_current_user_info')
+@login_required
 def get_current_user_info():
   user_info = {
     'email': current_user.email,
@@ -60,8 +65,14 @@ def get_current_user_info():
   }
   return jsonify(user_info)
 
-    
-
+@app.route('/get_users')
+@login_required
+def get_users():
+  if current_user.is_admin:
+    users = User.get_non_admin_users(db=DB)
+    return jsonify(users)
+  else:
+    return jsonify([])
 
 if __name__ == "__main__":
   app.run()

@@ -11,7 +11,7 @@ export default class AdminNavBar extends Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/">Manage Users</Nav.Link>
+          <Nav.Link href="/manage_users">Manage Users</Nav.Link>
           <Nav.Link href="/">Settings</Nav.Link>
           <Nav.Link href="/logout">Logout</Nav.Link>
           <Navbar.Text>

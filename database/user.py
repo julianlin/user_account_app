@@ -35,3 +35,25 @@ class User:
     """.format(email)
 
     return db.select_one(query_str=query_str)[0]
+  
+  @staticmethod
+
+  def get_non_admin_users(db: Database):
+    query_str = """
+    SELECT id, email, first_name, last_name, phone_number
+    FROM user
+    WHERE is_admin != 1
+    """
+    rows = db.select(query_str=query_str)
+    users = []
+
+    for row in rows:
+      users.append({
+        'id': row[0],
+        'email': row[1],
+        'first_name': row[2],
+        'last_name': row[3],
+        'phone_number': row[4]
+      })
+    return users
+

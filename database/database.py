@@ -19,13 +19,14 @@ class Database:
             first_name TEXT,
             last_name TEXT,
             password TEXT,
+            phone_number INTEGER,
             is_admin INTEGER);"""
         )
 
         with open('user.csv', 'r') as fp:
             dr = csv.DictReader(fp)
-            to_db = [(i['email'], i['first_name'], i['last_name'], i['password'], i['is_admin']) for i in dr]
-        cur.executemany("INSERT INTO user (email, first_name, last_name, password, is_admin) VALUES (?, ?, ?, ?, ?);", to_db)
+            to_db = [(i['email'], i['first_name'], i['last_name'], i['password'], i['phone_number'], i['is_admin']) for i in dr]
+        cur.executemany("INSERT INTO user (email, first_name, last_name, password, phone_number, is_admin) VALUES (?, ?, ?, ?, ?, ?);", to_db)
         conn.commit()
         conn.close()
 
