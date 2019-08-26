@@ -58,6 +58,17 @@ class User:
     return db.select_one(query_str=query_str)[0]
 
   @staticmethod
+  def insert_user(
+    db: Database, email: str, first_name: str='',
+    last_name: str='', phone_number: str='') -> bool:
+    query_str ="""
+    INSERT INTO user (email, first_name, last_name, phone_number)
+    VALUES ("{}", "{}", "{}", "{}")
+    """.format(email, first_name, last_name, phone_number)
+
+    return db.execute(query_str=query_str)
+
+  @staticmethod
   def update_user(db: Database, user_id: int, email: str,
      first_name: str, last_name: str, phone_number: str) -> bool:
     query_str = """
@@ -65,6 +76,4 @@ class User:
     SET email = "{}", first_name = "{}", last_name = "{}", phone_number = "{}"
     WHERE id = {}
     """.format(email, first_name, last_name, phone_number, user_id)
-    successfully_updated = db.execute(query_str=query_str)
-
-    return True if successfully_updated else False
+    return db.execute(query_str=query_str)

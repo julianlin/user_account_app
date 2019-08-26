@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import (
+  LoginManager, login_user, logout_user, login_required, current_user)
 from database.database import Database
 from database.user import User
+from database.invitation import Invitation
 from utils.flask_user import FlaskUser
 import json
 
@@ -41,7 +43,8 @@ def manage_users():
 @app.route('/login', methods=['POST'])
 def login_post():
   data = request.get_json()
-  is_authenticated = User.authenticate_user(db=DB, email=data['email'], password=data['password'])
+  is_authenticated = User.authenticate_user(
+    db=DB, email=data['email'], password=data['password'])
   if is_authenticated:
     user_id = User.get_user_id_from_email(DB, email=data['email'])
     login_user(User.get_user(DB, user_id))
@@ -77,7 +80,10 @@ def get_users():
 @app.route('/send_invite', methods=['POST'])
 @login_required
 def send_invite():
-  pass
+  if current_user.is_admin:
+    Invitation.create_invitation(db=DB, email="")
+  return json.dumps(
+        {'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/update_user', methods=['POST'])
 @login_required
@@ -90,14 +96,14 @@ def update_user():
         phone_number=data['phone_number'])
 
     if successfully_updated_user:
-      return json.dumps({'success':True}),
-        200, {'ContentType':'application/json'}
+      return json.dumps(
+        {'success':True}), 200, {'ContentType':'application/json'}
     else:
-      return json.dumps({'success':False}),
-        500, {'ContentType':'application/json'}
+      return json.dumps(
+        {'success':False}), 500, {'ContentType':'application/json'}
   else:
-    return json.dumps({'success':False}), 
-      401, {'ContentType':'application/json'}
+    return json.dumps(
+      {'success':False}), 401, {'ContentType':'application/json'}
 
 if __name__ == "__main__":
   app.run()

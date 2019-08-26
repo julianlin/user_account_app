@@ -31,17 +31,16 @@ export default class UserCreationForm extends Component {
 
     const that = this;
     
-    fetch('/login', {
+    fetch('/send_invite', {
       method: 'post',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-          'email': this.state.email,
-          'password': this.state.password
+          'email': this.state.email
       })
     }).then(function(response) {
         const status = response.status;
         if(status == 200){
-          window.location.href = "/";
+          //window.location.href = "/";
         } else if (status == 401) {
           that.setState(state => ({
             errorMessage: "email or password was incorrect"
