@@ -3,7 +3,6 @@ from flask_login import (
   LoginManager, login_user, logout_user, login_required, current_user)
 from database.database import Database
 from database.user import User
-from database.invitation import Invitation
 from utils.flask_user import FlaskUser
 import json
 
@@ -38,7 +37,11 @@ def login():
 
 @app.route('/manage_users')
 def manage_users():
-  return render_template('index.html')  
+  return render_template('index.html') 
+
+@app.route('/manage_invitations')
+def manage_invitations():
+  return render_template('index.html') 
 
 @app.route('/login', methods=['POST'])
 def login_post():
@@ -81,9 +84,9 @@ def get_users():
 @login_required
 def send_invite():
   if current_user.is_admin:
-    Invitation.create_invitation(db=DB, email="")
-  return json.dumps(
-        {'success':True}), 200, {'ContentType':'application/json'}
+    data = request.get_json()
+    invitation_code = User.create_invitation(db=DB, email=data['email'])
+  return jsonify({'invitation_code': invitation_code})
 
 @app.route('/update_user', methods=['POST'])
 @login_required

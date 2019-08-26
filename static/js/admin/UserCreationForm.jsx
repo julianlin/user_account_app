@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ErrorMessage from './../ErrorMessage';
+import Message from '../Message';
 
 
 export default class UserCreationForm extends Component {
@@ -12,7 +12,7 @@ export default class UserCreationForm extends Component {
     super(props);
     this.state = {
       'email': '',
-      'errorMessage': ''}
+      'message': ''}
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,9 +25,19 @@ export default class UserCreationForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.setState(state => ({
-      errorMessage: ""
-    }));
+    const emailIsValid = (
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email));
+
+    if (emailIsValid) {
+      this.setState(state => ({
+        message: ""
+      }));
+    } else {
+      this.setState(state => ({
+        message: "email is invalid"
+      }));
+      return
+    }
 
     const that = this;
     
@@ -38,15 +48,22 @@ export default class UserCreationForm extends Component {
           'email': this.state.email
       })
     }).then(function(response) {
-        const status = response.status;
-        if(status == 200){
-          //window.location.href = "/";
-        } else if (status == 401) {
-          that.setState(state => ({
-            errorMessage: "email or password was incorrect"
-          }));
-        }
-    });
+      return response.json()
+    }).then(function(json) {
+      let message = '';
+      if (json.invitation_code == 0) {
+        message = 'Invitation failed to send.';
+      } else if (json.invitation_code == 1) {
+        message = 'User already exists.';
+      } else {
+        message = 'Invitation sent to '.concat(that.state.email);
+      }
+
+      that.setState(state => ({
+        message: message
+      }));
+    })
+    ;
   }
 
   render() {
@@ -64,7 +81,7 @@ export default class UserCreationForm extends Component {
                   value={this.state.email}
                   onChange={this.handleChangeEmail}/>
               </Form.Group>
-              <ErrorMessage message={this.state.errorMessage}/>
+              <Message message={this.state.message}/>
               
               <Button variant="primary" type="submit">
                   Send Invitation

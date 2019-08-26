@@ -12,21 +12,8 @@ class Database:
       os.remove(DB_NAME)
 
     self.create_user_table()
-    self.create_invitation_table()
     self.insert_user_rows_from_csv()
 
-  def create_invitation_table(self) -> None:
-    query_str = """
-    CREATE TABLE invitation(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
-      invitation_url TEXT,
-      status TEXT,
-      FOREIGN KEY(user_id) REFERENCES user(id)
-    )
-    """
-
-    self.execute(query_str=query_str)
 
   def create_user_table(self) -> None:
     query_str = """
@@ -37,7 +24,8 @@ class Database:
     last_name TEXT,
     password TEXT,
     phone_number INTEGER,
-    is_admin INTEGER)
+    is_admin INTEGER,
+    invitation_code TEXT)
     """
 
     self.execute(query_str=query_str)
@@ -53,13 +41,14 @@ class Database:
       dr = csv.DictReader(fp)
       to_db = [
         (i['email'], i['first_name'], i['last_name'], i['password'],
-          i['phone_number'], i['is_admin']) for i in dr]
+          i['phone_number'], i['is_admin'], i['invitation_code']) for i in dr]
 
     cur.executemany(
       """
       INSERT INTO user 
-      (email, first_name, last_name, password, phone_number, is_admin)
-      VALUES (?, ?, ?, ?, ?, ?)""", 
+      (email, first_name, last_name, password,
+       phone_number, is_admin, invitation_code)
+      VALUES (?, ?, ?, ?, ?, ?, ?)""", 
       to_db)
     conn.commit()
     conn.close()

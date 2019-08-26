@@ -20,12 +20,12 @@ export default class Home extends Component {
     .then(function(response) {
       return response.json();
     })
-    .then(function(jsonData) {
+    .then(function(json) {
       that.setState({
-        email: jsonData.email,
-        first_name: jsonData.first_name,
-        last_name: jsonData.last_name,
-        is_admin: jsonData.is_admin
+        email: json.email,
+        first_name: json.first_name,
+        last_name: json.last_name,
+        is_admin: json.is_admin
       })
     }); 
   }

@@ -4,7 +4,7 @@ const messageStyle = {
    color: 'red'
 }
 
-export default class ErrorMessage extends Component {
+export default class Message extends Component {
    render() {
       return (
          <div style={messageStyle}>{this.props.message}</div>

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ErrorMessage from './ErrorMessage';
+import Message from './Message';
 
 
 export default class LoginPage extends Component {
@@ -13,7 +13,7 @@ export default class LoginPage extends Component {
     this.state = {
       'email': '',
       'password': '',
-      'errorMessage': ''}
+      'message': ''}
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -32,7 +32,7 @@ export default class LoginPage extends Component {
       event.preventDefault();
 
       this.setState(state => ({
-        errorMessage: ""
+        message: ""
       }));
 
       const that = this;
@@ -50,7 +50,7 @@ export default class LoginPage extends Component {
             window.location.href = "/";
           } else if (status == 401) {
             that.setState(state => ({
-              errorMessage: "email or password was incorrect"
+              message: "email or password was incorrect"
             }));
           }
       });
@@ -81,7 +81,7 @@ export default class LoginPage extends Component {
                       onChange={this.handleChangePassword}/>
                 </Form.Group>
 
-                <ErrorMessage message={this.state.errorMessage}/>
+                <Message message={this.state.message}/>
                 
                 <Button variant="primary" type="submit">
                     Log In

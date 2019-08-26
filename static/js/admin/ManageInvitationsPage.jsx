@@ -2,13 +2,13 @@ import React, { Component } from '../../node_modules/react';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import AdminNavBar from './AdminNavBar';
-import UserRow from './UserRow';
+import InvitationRow from './InvitationRow';
 
-export default class ManageUsersPage extends Component {
+export default class ManageInvitationsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userTableEntries: []
+      invitationTableRows: []
     }
   }
 
@@ -19,17 +19,9 @@ export default class ManageUsersPage extends Component {
       return response.json();
     })
     .then(function(jsonData) {
-      const userTableEntries = jsonData.map((user) =>
-        <UserRow
-          key={user.id}
-          id={user.id}
-          first_name={user.first_name}
-          last_name={user.last_name}
-          email={user.email}
-          phone_number={user.phone_number}/>
-      );
+      const invitationTableRows = [<InvitationRow email={'a'} invitationCode={'b'}/>]
       that.setState({
-        userTableEntries: userTableEntries
+        invitationTableRows: invitationTableRows
       })
     }); 
   }
@@ -41,14 +33,12 @@ export default class ManageUsersPage extends Component {
         <Table responsive>
           <thead>
             <tr>
-              <th>User ID</th>
-              <th>Name</th>
               <th>Email</th>
-              <th>Phone Number</th>
+              <th>Invitation Urls</th>
             </tr>
           </thead>
           <tbody>
-            {this.state.userTableEntries}
+            {this.state.invitationTableRows}
           </tbody>
         </Table>
       </div>
