@@ -155,18 +155,15 @@ export default class ManageUsersPage extends Component {
     let alertMessage = "";
 
     if(!nameIsValid) {
-      alertMessage = alertMessage.concat(
-        "Make sure to fill out both first and last names.\n");
+      alertMessage +=  "Make sure to fill out both first and last names.\n";
     }
 
     if(!emailIsValid) {
-      alertMessage = alertMessage.concat(
-        "Make sure the email is in the correct format.\n")
+      alertMessage +=  "Make sure the email is in the correct format.\n";
     }
 
     if(!phoneNumberIsValid) {
-      alertMessage = alertMessage.concat(
-        "Make sure there are only numbers in the phone number\n")
+      alertMessage += "Make sure there are only numbers in the phone number\n";
     }
     
     if(alertMessage) {

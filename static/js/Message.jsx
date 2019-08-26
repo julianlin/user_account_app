@@ -7,7 +7,7 @@ const messageStyle = {
 export default class Message extends Component {
    render() {
       return (
-         <div style={messageStyle}>{this.props.message}</div>
+         <p style={messageStyle}>{this.props.message}</p>
       )
    }
 }

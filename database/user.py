@@ -1,4 +1,3 @@
-
 import random, string
 from database.database import Database
 from utils.flask_user import FlaskUser
@@ -48,11 +47,31 @@ class User:
       for _ in range(code_len)))
 
   @staticmethod
-  def get_non_admin_users(db: Database):
+  def get_pending_users(db: Database):
+    query_str = """
+    SELECT email, invitation_code
+    FROM user
+    WHERE invitation_code IS NOT NULL AND (password = "" or password IS NULL)
+    """
+    rows = db.select(query_str=query_str)
+    users = []
+    
+    for row in rows:
+      users.append({
+        'email': row[0],
+        'invitationCode': row[1]
+      })
+    
+    return users
+
+  @staticmethod
+  def get_registered_non_admin_users(db: Database):
     query_str = """
     SELECT id, email, first_name, last_name, phone_number
     FROM user
     WHERE is_admin != 1
+    AND password != ""
+    AND password IS NOT NULL
     """
     rows = db.select(query_str=query_str)
     users = []

@@ -14,7 +14,12 @@ export default class InvitationRow extends Component {
     return (
       <tr>
         <td>{this.props.email}</td>
-        <td>{this.props.invitationCode}</td>
+        <td>
+          <a href={"http://127.0.0.1:5000/invitation/" + 
+            this.props.invitationCode}>
+            http://127.0.0.1:5000/invitation/{this.props.invitationCode}
+          </a>
+        </td>
       </tr>
     )
   }

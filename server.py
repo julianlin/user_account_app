@@ -71,14 +71,26 @@ def get_current_user_info():
   }
   return jsonify(user_info)
 
+@app.route('/get_pending_users')
+@login_required
+def get_pending_users():
+  if current_user.is_admin:
+    users = User.get_pending_users(db=DB)
+    print("test", users)
+    return jsonify(users)
+  else:
+    return json.dumps(
+      {'success':False}), 401, {'ContentType':'application/json'}
+
 @app.route('/get_users')
 @login_required
 def get_users():
   if current_user.is_admin:
-    users = User.get_non_admin_users(db=DB)
+    users = User.get_registered_non_admin_users(db=DB)
     return jsonify(users)
   else:
-    return jsonify([])
+    return json.dumps(
+      {'success':False}), 401, {'ContentType':'application/json'}
 
 @app.route('/send_invite', methods=['POST'])
 @login_required

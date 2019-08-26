@@ -12,7 +12,8 @@ export default class UserCreationForm extends Component {
     super(props);
     this.state = {
       'email': '',
-      'message': ''}
+      'message': '',
+      'message2': ''}
 
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,16 +52,19 @@ export default class UserCreationForm extends Component {
       return response.json()
     }).then(function(json) {
       let message = '';
+      let message2 = '';
       if (json.invitation_code == 0) {
         message = 'Invitation failed to send.';
       } else if (json.invitation_code == 1) {
         message = 'User already exists.';
       } else {
-        message = 'Invitation sent to '.concat(that.state.email);
+        message = 'Invitation for ' + that.state.email + ": ";
+        message2 = "http://127.0.0.1:5000/invitation/" + json.invitation_code;
       }
 
       that.setState(state => ({
-        message: message
+        message: message,
+        message2: message2
       }));
     })
     ;
@@ -82,6 +86,7 @@ export default class UserCreationForm extends Component {
                   onChange={this.handleChangeEmail}/>
               </Form.Group>
               <Message message={this.state.message}/>
+              <Message message={this.state.message2}/>
               
               <Button variant="primary" type="submit">
                   Send Invitation

@@ -14,12 +14,17 @@ export default class ManageInvitationsPage extends Component {
 
   componentDidMount() {
     const that = this;
-    fetch('/get_users')
+    fetch('/get_pending_users')
     .then(function(response) {
       return response.json();
     })
     .then(function(jsonData) {
-      const invitationTableRows = [<InvitationRow email={'a'} invitationCode={'b'}/>]
+      const invitationTableRows = jsonData.map((user) =>
+        <InvitationRow 
+          key={user.email}
+          email={user.email}
+          invitationCode={user.invitationCode}/>
+      )
       that.setState({
         invitationTableRows: invitationTableRows
       })
