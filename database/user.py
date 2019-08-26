@@ -2,6 +2,7 @@
 from database.database import Database
 from utils.flask_user import FlaskUser
 
+
 class User:
   @staticmethod
   def authenticate_user(db, email: str, password: str) -> bool:
@@ -67,8 +68,3 @@ class User:
     successfully_updated = db.execute(query_str=query_str)
 
     return True if successfully_updated else False
-
-
-
-  
-

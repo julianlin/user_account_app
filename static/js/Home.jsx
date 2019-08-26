@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AdminNavBar from './admin/AdminNavBar';
 import UserNavBar from './user/UserNavBar';
+import UserCreationForm from './admin/UserCreationForm';
 import getCurrentUserInfo from './utils/userUtils';
 
 export default class Home extends Component {
@@ -26,18 +27,22 @@ export default class Home extends Component {
         last_name: jsonData.last_name,
         is_admin: jsonData.is_admin
       })
-      console.log(that.state)
     }); 
   }
 
   render() {
     if(this.state.is_admin == 1){
       return (
-        <AdminNavBar first_name={this.state.first_name} last_name={this.state.last_name}/>
-      )
+        <div>
+          <AdminNavBar
+          first_name={this.state.first_name} last_name={this.state.last_name}/>
+          <UserCreationForm/>
+        </div>
+        )
     } else {
       return (
-        <UserNavBar first_name={this.state.first_name} last_name={this.state.last_name}/>
+        <UserNavBar 
+        first_name={this.state.first_name} last_name={this.state.last_name}/>
       )
     }
   }
