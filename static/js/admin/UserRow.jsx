@@ -34,6 +34,7 @@ export default class ManageUsersPage extends Component {
       edit_name: false,
       edit_email: false,
       edit_phone_number: false,
+      id: this.props.id,
       first_name: this.props.first_name,
       last_name: this.props.last_name,
       email: this.props.email,
@@ -117,6 +118,20 @@ export default class ManageUsersPage extends Component {
     
     if(alertMessage) {
       alert(alertMessage);
+    } else {
+      fetch('/update_user', {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            'id': this.state.id,
+            'first_name': this.state.first_name,
+            'last_name': this.state.last_name,
+            'email': this.state.email,
+            'phone_number': this.state.phone_number
+        })
+      }).then(function(response) {
+          console.log(response)
+      });
     }
 
   }

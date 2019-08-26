@@ -14,6 +14,26 @@ class User:
 
     result = db.select_one(query_str=query_str)
     return True if result else False
+
+  @staticmethod
+  def get_non_admin_users(db: Database):
+    query_str = """
+    SELECT id, email, first_name, last_name, phone_number
+    FROM user
+    WHERE is_admin != 1
+    """
+    rows = db.select(query_str=query_str)
+    users = []
+
+    for row in rows:
+      users.append({
+        'id': row[0],
+        'email': row[1],
+        'first_name': row[2],
+        'last_name': row[3],
+        'phone_number': row[4]
+      })
+    return users
   
   @staticmethod
   def get_user(db: Database, user_id: int):
@@ -35,25 +55,20 @@ class User:
     """.format(email)
 
     return db.select_one(query_str=query_str)[0]
-  
+
   @staticmethod
-
-  def get_non_admin_users(db: Database):
+  def update_user(db: Database, user_id: int, email: str,
+     first_name: str, last_name: str, phone_number: str) -> bool:
     query_str = """
-    SELECT id, email, first_name, last_name, phone_number
-    FROM user
-    WHERE is_admin != 1
-    """
-    rows = db.select(query_str=query_str)
-    users = []
+    UPDATE user
+    SET email = "{}", first_name = "{}", last_name = "{}", phone_number = "{}"
+    WHERE id = {}
+    """.format(email, first_name, last_name, phone_number, user_id)
+    successfully_updated = db.execute(query_str=query_str)
 
-    for row in rows:
-      users.append({
-        'id': row[0],
-        'email': row[1],
-        'first_name': row[2],
-        'last_name': row[3],
-        'phone_number': row[4]
-      })
-    return users
+    return True if successfully_updated else False
+
+
+
+  
 

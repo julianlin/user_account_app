@@ -74,5 +74,19 @@ def get_users():
   else:
     return jsonify([])
 
+@app.route('/update_user', methods=['POST'])
+@login_required
+def update_user():
+  if current_user.is_admin:
+    data = request.get_json()
+    successfully_updated_user = User.update_user(
+      db=DB, user_id=data['id'], email=data['email'], first_name=data['first_name'], last_name=data['last_name'], phone_number=data['phone_number'])
+    if successfully_updated_user:
+      return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    else:
+      return json.dumps({'success':False}), 500, {'ContentType':'application/json'}
+  else:
+    return json.dumps({'success':False}), 401, {'ContentType':'application/json'}
+
 if __name__ == "__main__":
   app.run()

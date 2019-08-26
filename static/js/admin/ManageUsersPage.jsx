@@ -28,9 +28,6 @@ export default class ManageUsersPage extends Component {
     }); 
   }
 
-
-  
-  
   render() {
     return (
       <div>
