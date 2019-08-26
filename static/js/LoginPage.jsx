@@ -62,14 +62,23 @@ export default class LoginPage extends Component {
           <Row className="justify-content-md-center" style={{height:"100%"}}>
             <Col lg={5} style={{marginTop:"auto", marginBottom:"auto"}}>
               <Form onSubmit={this.handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
+                <Form.Group controlId="formEmail">
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="email" autoFocus={true} placeholder="Email Address" value={this.state.email} onChange={this.handleChangeEmail}/>
+                    <Form.Control
+                      type="email"
+                      autoFocus={true}
+                      placeholder="Email Address"
+                      value={this.state.email}
+                      onChange={this.handleChangeEmail}/>
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword}/>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handleChangePassword}/>
                 </Form.Group>
 
                 <ErrorMessage message={this.state.errorMessage}/>
