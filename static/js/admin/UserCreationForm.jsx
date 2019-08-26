@@ -64,12 +64,21 @@ export default class UserCreationForm extends Component {
               <Form onSubmit={this.handleSubmit}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="email" autoFocus={true} placeholder="Email Address" value={this.state.email} onChange={this.handleChangeEmail}/>
+                    <Form.Control
+                      type="email"
+                      autoFocus={true}
+                      placeholder="Email Address"
+                      value={this.state.email}
+                      onChange={this.handleChangeEmail}/>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword}/>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handleChangePassword}/>
                 </Form.Group>
 
                 <ErrorMessage message={this.state.errorMessage}/>

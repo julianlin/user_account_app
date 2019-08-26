@@ -15,7 +15,10 @@ export default class AdminNavBar extends Component {
           <Nav.Link href="/">Settings</Nav.Link>
           <Nav.Link href="/logout">Logout</Nav.Link>
           <Navbar.Text>
-            Signed in as: <a href="#login">{this.props.first_name} {this.props.last_name}</a>
+            Signed in as: 
+            <a href="#login">
+              {this.props.first_name} {this.props.last_name}
+            </a>
           </Navbar.Text>
         </Nav>
 
