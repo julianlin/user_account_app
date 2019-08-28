@@ -2,7 +2,7 @@
 
 # Overview
 
-This app has 2 main functions for 2 types of users, “Admins” and “Users”. “Admins” can manage “Users” and “Users” have access to various fintech apps. I tried to keep this app as simple as possible while still showing a full range of full stack ability. This means I skipped or shortcutted things that would have taken a lot of time or added complexity, but not really show anything new in terms of technical skill.
+This app has 2 main functions for 2 types of users, “Admins” and “Users”. “Admins” can manage “Users” and “Users” have access to features. I tried to keep this app as simple as possible while still showing a full range of full stack ability. This means I skipped or shortcutted things that would have taken a lot of time or added complexity, but not really show anything new in terms of technical skill.
 
 # Features
 ## General
