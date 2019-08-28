@@ -9,7 +9,7 @@ This app has 2 main functions for 2 types of users, “Admins” and “Users”
 1. Login
 - Users are able to login to the app using their email and password.
 2. Reset Password
-- Users are able to change their password if they have forgotten it. Usually, we would send a reset link to their email or phone, but to simplify things, we’ll just send users directly to the reset link once they request a password change. The reset link should be generated when requested and not be guessable, but again, in the interest of simplicity, we will make the reset link: “/reset_password/<email address>”
+- Users are able to change their password if they have forgotten it. Usually, I would send a reset link to their email or phone, but to simplify things, I just send users directly to the reset link once they request a password change. The reset link should be generated when requested and not be guessable, but again, in the interest of simplicity, we will make the reset link: “/reset_password/<email address>”
 3. Edit Account
 - Users are able to see and change their account information including name, email, and phone number. Password can be changed using the reset password feature.
 4. Navigation Bar
@@ -34,7 +34,7 @@ Users would have access to whatever product this app is for. However since this 
 
 ## Front-End
 The front end is built using React. I followed Google’s Javascript style guide and AirBnB’s react style guide.I tried to minimize the number of packages I used for simplicity. Other front end 
-packages I used include react-boostrap for style, react-router to handle routing, webpack to handle packages, and babel to handle backwards capabilities.
+packages I used include react-boostrap for style, react-router to handle routing, webpack to handle packages, and babel to handle backwards capability.
 
 
 Future work
