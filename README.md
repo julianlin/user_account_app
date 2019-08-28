@@ -24,6 +24,10 @@ This app has 2 main functions for 2 types of users, “Admins” and “Users”
 - Admins can see all pending invitations with corresponding invitation links
 
 ## User
+Register
+- users can go to their invitation link to register their accounts
+
+
 Users would have access to whatever product this app is for. However since this is just a sample app, I have not implemented any of those features. Users can still log in, change account info, etc as Admins can.
 
 # Design
