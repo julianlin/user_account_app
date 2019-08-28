@@ -59,7 +59,7 @@ export default class UserCreationForm extends Component {
         message = 'User already exists.';
       } else {
         message = 'Invitation for ' + that.state.email + ": ";
-        message2 = "http://127.0.0.1:5000/invitation/" + json.invitation_code;
+        message2 = "http://127.0.0.1:5000/register/" + json.invitation_code;
       }
 
       that.setState(state => ({

@@ -7,16 +7,16 @@ const editButtonStyle = {
 }
 
 function FullName(props) {
-  if (props.edit_state){
+  if (props.editState){
     return (
     <td>
       <input
         type="text"
-        value={props.first_name}
+        value={props.firstName}
         onChange={props.onChangeFirstName}/>
       <input
         type="text"
-        value={props.last_name}
+        value={props.lastName}
         onChange={props.onChangeLastName}/>
       <Button
         variant='outline-dark'
@@ -30,7 +30,7 @@ function FullName(props) {
   } else {
     return (
     <td>
-      {props.first_name} {props.last_name}
+      {props.firstName} {props.lastName}
       <Button
         variant='outline-dark'
         size='sm'
@@ -44,7 +44,7 @@ function FullName(props) {
 }
 
 function InfoColumn(props) {
-  if (props.edit_state){
+  if (props.editState){
     return <td>
       <input
         type={props.inputType}
@@ -78,14 +78,14 @@ export default class ManageUsersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      edit_name: false,
-      edit_email: false,
-      edit_phone_number: false,
+      editName: false,
+      editEmail: false,
+      editPhoneNumber: false,
       id: this.props.id,
-      first_name: this.props.first_name,
-      last_name: this.props.last_name,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
       email: this.props.email,
-      phone_number: this.props.phone_number
+      phoneNumber: this.props.phoneNumber
     }
     
     this.handleOnChangeFirstName = this.handleOnChangeFirstName.bind(this);
@@ -103,14 +103,14 @@ export default class ManageUsersPage extends Component {
   handleOnChangeFirstName(event) {
     const val = event.target.value;
     this.setState(state =>({
-      first_name: val
+      firstName: val
     }))
   }
 
   handleOnChangeLastName(event) {
     const val = event.target.value;
     this.setState(state =>({
-      last_name: val
+      lastName: val
     }))
   }
 
@@ -124,33 +124,33 @@ export default class ManageUsersPage extends Component {
   handleOnChangePhoneNumber(event) {
     const val = event.target.value;
     this.setState(state =>({
-      phone_number: val
+      phoneNumber: val
     }))
   }
 
   handleClickEditName() {
     this.setState(state =>({
-      edit_name: !this.state.edit_name
+      editName: !this.state.editName
     }))
   }
 
   handleClickEditEmail() {
     this.setState(state =>({
-      edit_email: !this.state.edit_email
+      editEmail: !this.state.editEmail
     }))
   }
 
   handleClickEditPhoneNumber() {
     this.setState(state =>({
-      edit_phone_number: !this.state.edit_phone_number
+      editPhoneNumber: !this.state.editPhoneNumber
     }))
   }
 
   handleClickSave() {
-    const nameIsValid = this.state.first_name && this.state.last_name;
+    const nameIsValid = this.state.firstName && this.state.lastName;
     const emailIsValid = (
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email));
-    const phoneNumberIsValid = !isNaN(this.state.phone_number);
+    const phoneNumberIsValid = !isNaN(this.state.phoneNumber);
 
     let alertMessage = "";
 
@@ -174,13 +174,17 @@ export default class ManageUsersPage extends Component {
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
             'id': this.state.id,
-            'first_name': this.state.first_name,
-            'last_name': this.state.last_name,
+            'first_name': this.state.firstName,
+            'last_name': this.state.lastName,
             'email': this.state.email,
-            'phone_number': this.state.phone_number
+            'phone_number': this.state.phoneNumber
         })
       }).then(function(response) {
-          console.log("Changes saved.")
+        if (response.status == 200) {
+          alert("Changes saved.");
+        } else {
+          alert("Changes failed to save. Status : " + response.status)
+        }
       });
     }
 
@@ -191,20 +195,20 @@ export default class ManageUsersPage extends Component {
       <tr>
         <td>{this.props.id}</td>
         <FullName 
-          first_name={this.state.first_name} last_name={this.props.last_name}
-          edit_state={this.state.edit_name} 
+          firstName={this.state.firstName} lastName={this.state.lastName}
+          editState={this.state.editName} 
           onChangeFirstName={this.handleOnChangeFirstName}
           onChangeLastName={this.handleOnChangeLastName}
           onClickName={this.handleClickEditName}/>
         <InfoColumn 
           infoValue={this.state.email}
-          inputType={"email"} edit_state={this.state.edit_email}
+          inputType={"email"} editState={this.state.editEmail}
           onChangeFunction={this.handleOnChangeEmail}
           onClickFunction={this.handleClickEditEmail}/>
         <InfoColumn
-          infoValue={this.state.phone_number}
+          infoValue={this.state.phoneNumber}
           inputType={"number"}
-          edit_state={this.state.edit_phone_number}
+          editState={this.state.editPhoneNumber}
           onChangeFunction={this.handleOnChangePhoneNumber}
           onClickFunction={this.handleClickEditPhoneNumber}/>
         <td>

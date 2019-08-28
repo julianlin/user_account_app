@@ -1,10 +1,12 @@
 class FlaskUser():
-  def __init__(self, user_id, email, first_name, last_name, is_admin):
+  def __init__(
+    self, user_id, email, first_name, last_name, is_admin, phone_number):
     self.user_id = user_id
     self.email = email
     self.first_name = first_name
     self.last_name = last_name
     self.is_admin = is_admin
+    self.phone_number = phone_number
       
   def is_authenticated(self):
     return True

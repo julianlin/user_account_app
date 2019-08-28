@@ -1,8 +1,8 @@
 import React, { Component } from '../../node_modules/react';
-import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import AdminNavBar from './AdminNavBar';
+import NavBar from '../NavBar';
 import UserRow from './UserRow';
+
 
 export default class ManageUsersPage extends Component {
   constructor(props) {
@@ -23,10 +23,10 @@ export default class ManageUsersPage extends Component {
         <UserRow
           key={user.id}
           id={user.id}
-          first_name={user.first_name}
-          last_name={user.last_name}
+          firstName={user.first_name}
+          lastName={user.last_name}
           email={user.email}
-          phone_number={user.phone_number}/>
+          phoneNumber={user.phone_number}/>
       );
       that.setState({
         userTableEntries: userTableEntries
@@ -37,7 +37,7 @@ export default class ManageUsersPage extends Component {
   render() {
     return (
       <div>
-        <AdminNavBar/>
+        <NavBar/>
         <Table responsive>
           <thead>
             <tr>

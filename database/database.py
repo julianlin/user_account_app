@@ -19,7 +19,7 @@ class Database:
     query_str = """
     CREATE TABLE user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT,
+    email TEXT UNIQUE,
     first_name TEXT,
     last_name TEXT,
     password TEXT,

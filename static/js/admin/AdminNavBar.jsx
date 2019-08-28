@@ -13,12 +13,12 @@ export default class AdminNavBar extends Component {
           <Nav className="mr-auto">
             <Nav.Link href="/manage_users">Manage Users</Nav.Link>
             <Nav.Link href="/manage_invitations">Manage Invitations</Nav.Link>
-            <Nav.Link href="/">Settings</Nav.Link>
+            <Nav.Link href="/account">Account</Nav.Link>
             <Nav.Link href="/logout">Logout</Nav.Link>
             <Navbar.Text>
               Signed in as: 
               <a href="#login">
-                {this.props.first_name} {this.props.last_name}
+                <span> {this.props.firstName} {this.props.lastName}</span>
               </a>
             </Navbar.Text>
           </Nav>

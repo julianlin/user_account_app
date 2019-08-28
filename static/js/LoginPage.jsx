@@ -18,6 +18,7 @@ export default class LoginPage extends Component {
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClickForgotPassword = this.handleClickForgotPassword.bind(this);
   }
 
     handleChangeEmail(event) {
@@ -56,6 +57,32 @@ export default class LoginPage extends Component {
       });
     }
 
+    handleClickForgotPassword() {
+      const that = this;
+      if (!this.state.email){
+        that.setState(state => ({
+          message: "Please enter your email to reset your password."
+        }));
+      } else {
+        fetch('/user_with_email_exists', {
+          method: 'post',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+              'email': this.state.email
+          })
+        }).then(function(response) {
+            const status = response.status;
+            if(status == 200){
+              window.location.href = "/reset_password/" + that.state.email;
+            } else if (status == 400) {
+              that.setState(state => ({
+                message: "User with that email does not exist."
+              }));
+            }
+        });
+      }
+    }
+
     render() {
       return (
         <Container style={{height:"100%"}}>
@@ -83,9 +110,17 @@ export default class LoginPage extends Component {
 
                 <Message message={this.state.message}/>
                 
-                <Button variant="primary" type="submit">
-                    Log In
-                </Button>
+                <span style={{width: "100%"}}>
+                  <Button variant="primary" type="submit">
+                      Log In
+                  </Button>
+                  <Button
+                    style={{marginLeft: "10%"}}
+                    variant="primary"
+                    onClick={this.handleClickForgotPassword}>
+                      Forgot Password
+                  </Button>
+                </span>
               </Form>
             </Col>
           </Row>

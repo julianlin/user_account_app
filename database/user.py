@@ -89,13 +89,16 @@ class User:
   @staticmethod
   def get_user(db: Database, user_id: int):
     query_str = """
-    SELECT id, email, first_name, last_name, is_admin
+    SELECT 
+    id, email, first_name, last_name, is_admin, phone_number
     FROM user
     WHERE id = {}
     """ .format(str(user_id))
 
     rows = db.select(query_str=query_str)
-    return FlaskUser(rows[0][0], rows[0][1], rows[0][2], rows[0][3], rows[0][4])
+    return FlaskUser(
+      user_id=rows[0][0], email=rows[0][1], first_name=rows[0][2],
+       last_name=rows[0][3], is_admin=rows[0][4], phone_number=rows[0][5])
   
   @staticmethod
   def get_user_id_from_email(db: Database, email: str):
@@ -104,6 +107,17 @@ class User:
     FROM user
     WHERE email = "{}"
     """.format(email)
+
+    row = db.select_one(query_str=query_str)
+    return row[0] if row else 0
+
+  def get_user_id_from_invitation_code(
+    db: Database, invitation_code: str) -> int:
+    query_str = """
+    SELECT id
+    FROM user
+    WHERE invitation_code = "{}"
+    """.format(invitation_code)
 
     row = db.select_one(query_str=query_str)
     return row[0] if row else 0
@@ -134,6 +148,20 @@ class User:
     return True if row else False
 
   @staticmethod
+  def register_user(
+    db: Database, invitation_code: str, first_name: str, last_name: str,
+    phone_number: str, password: str) -> bool:
+    query_str = """
+    UPDATE user
+    SET 
+    first_name = "{}", last_name = "{}", phone_number = "{}", password = "{}"
+    WHERE invitation_code = "{}"
+    """.format(first_name, last_name, phone_number, password, invitation_code)
+
+    return db.execute(query_str=query_str)
+
+
+  @staticmethod
   def update_user(db: Database, user_id: int, email: str,
      first_name: str, last_name: str, phone_number: str) -> bool:
     query_str = """
@@ -142,3 +170,34 @@ class User:
     WHERE id = {}
     """.format(email, first_name, last_name, phone_number, user_id)
     return db.execute(query_str=query_str)
+
+  @staticmethod
+  def update_password(db: Database, email: str, password: str) -> bool:
+    query_str = """
+    UPDATE user
+    SET password = "{}"
+    WHERE email = "{}"
+    """.format(password, email)
+    print(query_str)
+    return db.execute(query_str=query_str) 
+
+  @staticmethod
+  def user_already_registered(db: Database, invitation_code: str) -> bool:
+    query_str = """
+    SELECT first_name
+    FROM user
+    WHERE invitation_code = "{}"
+    """.format(invitation_code)
+
+    row = db.select_one(query_str=query_str)
+    return True if (row and row[0]) else False
+
+  @staticmethod
+  def user_with_email_exists(db: Database, email: str) -> bool:
+    query_str = """
+    SELECT id
+    FROM user
+    WHERE email = "{}"
+    """.format(email)
+
+    return True if db.select_one(query_str=query_str) else False

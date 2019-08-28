@@ -1,8 +1,8 @@
 import React, { Component } from '../../node_modules/react';
-import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import AdminNavBar from './AdminNavBar';
+import NavBar from '../NavBar';
 import InvitationRow from './InvitationRow';
+
 
 export default class ManageInvitationsPage extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export default class ManageInvitationsPage extends Component {
   render() {
     return (
       <div>
-        <AdminNavBar/>
+        <NavBar/>
         <Table responsive>
           <thead>
             <tr>
